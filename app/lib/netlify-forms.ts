@@ -9,10 +9,6 @@ export async function submitToNetlifyForm(
   formName: string,
   payload: Record<string, string>
 ): Promise<void> {
-  if (process.env.NETLIFY !== 'true') {
-    return;
-  }
-
   const body = new URLSearchParams({ 'form-name': formName, ...payload });
   const baseUrl = getNetlifyBaseUrl(request);
 
