@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Container from '../components/Container';
 import Link from 'next/link';
+import { ChevronDown } from 'lucide-react';
 import ApplyForm from '../components/forms/ApplyForm';
 
 export const metadata: Metadata = {
@@ -65,11 +66,6 @@ const faqItems = [
     question: 'How long does the admission process take?',
     answer:
       'Most complete applications are processed within 2 to 4 weeks, depending on document readiness.',
-  },
-  {
-    question: 'Is financial assistance available?',
-    answer:
-      'Yes. Scholarships are offered for outstanding performance, and flexible payment plans may be available.',
   },
   {
     question: 'Can I visit the campus before applying?',
@@ -156,8 +152,9 @@ export default function AdmissionPage() {
           <div className="mx-auto max-w-4xl space-y-4">
             {faqItems.map((item) => (
               <details key={item.question} className="pro-card overflow-hidden">
-                <summary className="cursor-pointer list-none px-6 py-5 font-semibold text-slate-900 transition-colors hover:bg-slate-50">
-                  {item.question}
+                <summary className="cursor-pointer list-none px-6 py-5 font-semibold text-slate-900 transition-colors hover:bg-slate-50 flex items-center justify-between">
+                  <span>{item.question}</span>
+                  <ChevronDown size={20} className="shrink-0" />
                 </summary>
                 <p className="border-t border-slate-100 px-6 py-5 text-sm">{item.answer}</p>
               </details>

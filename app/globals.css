@@ -238,6 +238,14 @@ small {
   background: var(--primary);
 }
 
+details > summary svg {
+  transition: transform var(--motion-base) ease;
+}
+
+details[open] > summary svg {
+  transform: rotate(180deg);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
