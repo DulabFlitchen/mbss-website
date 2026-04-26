@@ -77,7 +77,7 @@ export default function ContactPage() {
             <article className="pro-card p-7 text-center">
               <span className="icon-chip mx-auto"><MapPin className="h-5 w-5" /></span>
               <h3 className="mt-4 font-semibold text-slate-900">Address</h3>
-              <p className="mt-2 text-sm">Mwandege Boys Secondary School<br />P.O. Box [Postal Code]<br />Mwandege, Tanzania</p>
+              <p className="mt-2 text-sm">Mwandege Boys Secondary School<br />P.O. Box 61524<br />Mwandege, Tanzania</p>
             </article>
             <article className="pro-card p-7 text-center">
               <span className="icon-chip mx-auto"><Phone className="h-5 w-5" /></span>

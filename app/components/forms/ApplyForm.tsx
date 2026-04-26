@@ -15,7 +15,6 @@ interface FormData {
   applyingFor: string;
   previousSchool: string;
   message: string;
-  botField: string;
 }
 
 interface FormErrors {
@@ -49,7 +48,6 @@ export default function ApplyForm() {
     applyingFor: '',
     previousSchool: '',
     message: '',
-    botField: '',
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -154,23 +152,25 @@ export default function ApplyForm() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/apply', {
+      const body = new URLSearchParams();
+      body.append('form-name', 'application');
+      for (const [key, value] of Object.entries({
+        ...formData,
+        phone: `${COUNTRY_CODE}${formData.phone}`,
+        guardianPhone: `${COUNTRY_CODE}${formData.guardianPhone}`,
+      })) {
+        body.append(key, value);
+      }
+
+      const res = await fetch('/api/application', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify({
-          ...formData,
-          phone: `${COUNTRY_CODE}${formData.phone}`,
-          guardianPhone: `${COUNTRY_CODE}${formData.guardianPhone}`,
-        }),
+        body: body.toString(),
       });
 
-      const result = (await response.json().catch(() => null)) as
-        | { error?: string; message?: string }
-        | null;
-
-      if (response.ok) {
+      if (res.ok || res.status === 200) {
         setSubmitStatus('success');
         setFormData({
           studentName: '',
@@ -184,12 +184,11 @@ export default function ApplyForm() {
           applyingFor: '',
           previousSchool: '',
           message: '',
-          botField: '',
         });
         setErrors({});
       } else {
         setSubmitStatus('error');
-        setSubmitError(result?.error ?? 'Something went wrong. Please try again.');
+        setSubmitError('Something went wrong. Please try again.');
       }
     } catch {
       setSubmitStatus('error');
@@ -222,20 +221,7 @@ export default function ApplyForm() {
       onSubmit={handleSubmit}
       className="bg-white rounded-lg shadow-md p-8"
       name="application"
-      method="POST"
-      data-netlify="true"
-      netlify-honeypot="botField"
     >
-      <input type="hidden" name="form-name" value="application" />
-      <input
-        type="text"
-        name="botField"
-        value={formData.botField}
-        onChange={handleChange}
-        className="hidden"
-        tabIndex={-1}
-        autoComplete="off"
-      />
 
       {submitStatus === 'error' && (
         <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6" role="alert" aria-live="polite">

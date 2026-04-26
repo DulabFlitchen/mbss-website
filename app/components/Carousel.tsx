@@ -97,7 +97,7 @@ export default function Carousel() {
 {/* Carousel card */}
       <div className="absolute inset-0 z-10 flex items-center">
         <div className="mx-auto w-full max-w-7xl px-5 sm:px-7 lg:px-10">
-          <div className="flex h-[320px] max-w-3xl flex-col rounded-3xl border border-white/20 bg-white/8 p-7 shadow-2xl backdrop-blur-sm sm:h-[350px] sm:p-10 lg:h-[380px]">
+          <div className="flex min-h-[320px] max-w-3xl flex-col rounded-3xl border border-white/20 bg-white/8 p-7 shadow-2xl backdrop-blur-sm sm:min-h-[350px] sm:p-10 lg:min-h-[380px]">
             <span className="kicker self-start !border-sky-100/35 !bg-sky-200/15 !text-sky-100">Academic Excellence in Action</span>
             <h2 className="mt-5 text-balance text-4xl font-bold leading-tight !text-white sm:text-5xl lg:text-6xl">{currentSlideData.title}</h2>
             <p className="mt-4 max-w-2xl text-base text-on-dark sm:text-lg">{currentSlideData.description}</p>

@@ -3,7 +3,7 @@ export const siteConfig = {
   shortName: 'MBSS',
   description:
     'Mwandege Boys Secondary School provides quality education and develops disciplined, motivated leaders through academics, character, and practical life skills.',
-  url: 'https://mwandege-school.com',
+  url: 'https://mwandegeschools.ac.tz',
   ogImage: '/schoolLogo.png',
   phone: '+255-656-209607',
   email: 'info@mwandegeschools.ac.tz',

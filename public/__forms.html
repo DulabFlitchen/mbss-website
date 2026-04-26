@@ -7,9 +7,8 @@
   </head>
   <body>
     <!-- Static form definitions for Netlify form detection during build -->
-    <form name="contact" method="POST" data-netlify="true" netlify-honeypot="botField">
+    <form name="contact" method="POST" data-netlify="true" hidden>
       <input type="hidden" name="form-name" value="contact" />
-      <input type="text" name="botField" />
       <input type="text" name="name" />
       <input type="email" name="email" />
       <input type="text" name="phone" />
@@ -17,9 +16,8 @@
       <textarea name="message"></textarea>
     </form>
 
-    <form name="application" method="POST" data-netlify="true" netlify-honeypot="botField">
+    <form name="application" method="POST" data-netlify="true" hidden>
       <input type="hidden" name="form-name" value="application" />
-      <input type="text" name="botField" />
       <input type="text" name="studentName" />
       <input type="text" name="gender" />
       <input type="text" name="dateOfBirth" />
