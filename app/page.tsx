@@ -3,152 +3,146 @@ import Carousel from './components/Carousel';
 import Link from 'next/link';
 import { GraduationCap, Users, Target, BookOpen, FlaskConical, Award, ArrowRight } from 'lucide-react';
 
+const highlights = [
+  {
+    title: 'Academic Excellence',
+    description:
+      'Following the Tanzania National Syllabus with practical "learning by doing" for deep understanding.',
+    icon: GraduationCap,
+  },
+  {
+    title: 'Supportive Community',
+    description:
+      'A diverse and motivated student body built on discipline, mentorship, and shared ambition.',
+    icon: Users,
+  },
+  {
+    title: 'Leadership Formation',
+    description:
+      'Developing great thinkers and responsible leaders prepared to serve society with integrity.',
+    icon: Target,
+  },
+];
+
+const whyChooseUs = [
+  {
+    title: 'WTS Program',
+    body: 'Our What Is Not Taught in School program strengthens critical thinking, resilience, creativity, and emotional intelligence.',
+    icon: BookOpen,
+  },
+  {
+    title: 'No-Bell System',
+    body: 'Students manage schedules through personal responsibility, building independence and high self-discipline.',
+    icon: FlaskConical,
+  },
+  {
+    title: 'Modern Learning Facilities',
+    body: 'Science labs, digital resources, and professional facilitation combine to create a future-ready education environment.',
+    icon: Award,
+  },
+];
+
 export default function Home() {
   return (
     <>
-      {/* Hero Carousel Section */}
       <section className="relative">
         <Carousel />
       </section>
 
-      {/* Key Highlights */}
-      <section className="py-16 sm:py-24 bg-white">
+      <section className="section-shell">
         <Container>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <GraduationCap className="w-12 h-12 mx-auto text-blue-600 mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Academic Excellence</h3>
-              <p className="text-gray-600">
-                Following the Tanzania National Syllabus with a "Learning by Doing" approach for practical knowledge.
-              </p>
-            </div>
-            <div className="text-center p-6">
-              <Users className="w-12 h-12 mx-auto text-blue-600 mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Students</h3>
-              <p className="text-gray-600">
-                A diverse, motivated community of young learners committed to excellence and discipline.
-              </p>
-            </div>
-            <div className="text-center p-6">
-              <Target className="w-12 h-12 mx-auto text-blue-600 mb-4" />
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">Disciplined Leaders</h3>
-              <p className="text-gray-600">
-                To be the most disciplined secondary school in Tanzania, developing great thinkers and leaders.
-              </p>
-            </div>
+          <div className="section-heading">
+            <span className="kicker">Why Families Choose Mwandege</span>
+            <h2 className="mt-5 font-bold">Built for Academic Strength and Character</h2>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {highlights.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article key={item.title} className="pro-card p-7">
+                  <span className="icon-chip">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-4 font-semibold text-slate-900">{item.title}</h3>
+                  <p className="mt-2 text-sm">{item.description}</p>
+                </article>
+              );
+            })}
           </div>
         </Container>
       </section>
 
-      {/* About Section */}
-      <section className="py-16 sm:py-24 bg-blue-50">
+      <section className="section-shell surface-alt">
         <Container>
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-900 mb-8">
-              About Mwandege Boys Secondary School
-            </h2>
-            <p className="text-gray-700 text-center mb-6 leading-relaxed">
-              Mwandege Boys Secondary School is a Tanzanian educational institution focused on developing disciplined, motivated leaders through the national syllabus and specialized life-skills programming. With our motto "<span className="font-semibold text-blue-900">Learn & Serve</span>", we are committed to nurturing excellence in academics and character.
+          <div className="section-heading">
+            <span className="kicker">About Mwandege</span>
+            <h2 className="mt-5 font-bold">A School Culture Centered on Excellence</h2>
+            <p className="mx-auto mt-4 prose-wrap text-base">
+              Mwandege Boys Secondary School combines strong academics with values-based leadership training. Guided by our motto,
+              <strong> Learn &amp; Serve</strong>, we nurture students who excel intellectually and contribute positively to their communities.
             </p>
-            <div className="bg-white p-8 rounded-lg shadow-md">
-              <h3 className="text-2xl font-bold text-blue-900 mb-4">Our Mission</h3>
-              <p className="text-gray-700 mb-6">
-                To develop student talent and potential to create "great thinkers" equipped with knowledge, skills, and values needed for success in higher education and beyond.
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h4 className="text-lg font-semibold text-blue-800 mb-2">Core Values</h4>
-                  <ul className="text-gray-700 space-y-1">
-                    <li>✓ <span className="font-medium">Trust</span></li>
-                    <li>✓ <span className="font-medium">Respect</span></li>
-                    <li>✓ <span className="font-medium">Transparency</span></li>
-                  </ul>
-                </div>
-                <div>
-                  <h4 className="text-lg font-semibold text-blue-800 mb-2">Key Features</h4>
-                  <ul className="text-gray-700 space-y-1">
-                    <li>✓ Modern facilities</li>
-                    <li>✓ Professional facilitation</li>
-                    <li>✓ Holistic development</li>
-                  </ul>
-                </div>
+          </div>
+          <article className="pro-card mx-auto max-w-4xl p-8 sm:p-10">
+            <div className="grid gap-8 md:grid-cols-2">
+              <div>
+                <p className="eyebrow">Our Mission</p>
+                <h3 className="mt-3 font-semibold text-slate-900">Developing Great Thinkers</h3>
+                <p className="mt-3 text-sm">
+                  We cultivate talent and potential through practical learning, professional facilitation, and strong character formation for long-term success.
+                </p>
+              </div>
+              <div>
+                <p className="eyebrow">Core Values</p>
+                <ul className="mt-4 space-y-2 text-sm">
+                  <li>Trust and accountability in every interaction</li>
+                  <li>Respect for self, peers, and community</li>
+                  <li>Transparency in teaching and leadership</li>
+                </ul>
               </div>
             </div>
+          </article>
+        </Container>
+      </section>
+
+      <section className="section-shell">
+        <Container>
+          <div className="section-heading">
+            <span className="kicker">Our Approach</span>
+            <h2 className="mt-5 font-bold">Programs that Shape Future Leaders</h2>
+          </div>
+          <div className="grid gap-6 md:grid-cols-3">
+            {whyChooseUs.map((item) => {
+              const Icon = item.icon;
+              return (
+                <article key={item.title} className="pro-card p-7">
+                  <span className="icon-chip">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <h3 className="mt-4 font-semibold text-slate-900">{item.title}</h3>
+                  <p className="mt-2 text-sm">{item.body}</p>
+                </article>
+              );
+            })}
           </div>
         </Container>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-16 sm:py-24 bg-white">
+      <section className="section-shell surface-brand">
         <Container>
-          <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-900 mb-12">
-            Why Choose Mwandege?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-semibold text-blue-800 mb-4">Innovative Learning Programs</h3>
-              <ul className="space-y-4 text-gray-700">
-                <li className="flex gap-3">
-                  <BookOpen className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <strong>WTS Program:</strong> &ldquo;What Is Not Taught in School&rdquo; focusing on critical thinking, emotional resilience, creativity, and problem-solving
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <FlaskConical className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <strong>No-Bell System:</strong> Students manage their schedules using wristwatches and diaries, fostering independence
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <GraduationCap className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <strong>Learning by Doing:</strong> Tanzania National Syllabus with practical application emphasis
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-2xl font-semibold text-blue-800 mb-4">World-Class Facilities & Support</h3>
-              <ul className="space-y-4 text-gray-700">
-                <li className="flex gap-3">
-                  <Award className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <strong>Modern Infrastructure:</strong> Advanced science laboratories, comprehensive library, and cutting-edge technology tools
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <Users className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <strong>Professional Facilitation:</strong> Experienced educators prioritizing close relationships and individual mentorship
-                  </div>
-                </li>
-                <li className="flex gap-3">
-                  <Target className="w-5 h-5 text-blue-600 flex-shrink-0 mt-1" />
-                  <div>
-                    <strong>Scholarships:</strong> Awarded to top performers in national examinations
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-16 sm:py-24 bg-blue-900 text-white">
-        <Container>
-          <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-6">Ready to Join Our Community?</h2>
-            <p className="text-lg mb-8 text-blue-100">
-              Start your journey towards academic excellence, personal growth, and becoming a great thinker. Apply today!
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="kicker !border-white/35 !bg-white/15 !text-white">Admissions Open</span>
+            <h2 className="mt-5 font-bold !text-white">Ready to Join the Mwandege Community?</h2>
+            <p className="mx-auto mt-4 prose-wrap text-on-dark">
+              Begin your journey toward academic excellence, personal growth, and disciplined leadership.
             </p>
-            <Link
-              href="/admission"
-              className="inline-block bg-white hover:bg-gray-100 text-blue-900 font-semibold px-8 py-3 rounded-lg transition-colors duration-200"
-            >
-              Apply Now
-            </Link>
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <Link href="/admission" className="cta-secondary !min-w-42">
+                Apply Now
+              </Link>
+              <Link href="/about" className="cta-secondary !min-w-42 !bg-transparent !text-white !border-white/35 hover:!bg-white/10">
+                Learn More <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </Container>
       </section>

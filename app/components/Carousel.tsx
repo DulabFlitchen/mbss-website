@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -16,37 +17,37 @@ const slides: CarouselSlide[] = [
     id: 1,
     image: '/carousel/carosel1.jpg',
     title: 'Welcome to Mwandege Boys Secondary School',
-    description: 'Nurturing excellence through quality education and character development',
+    description: 'Nurturing excellence through quality education and character development.',
   },
   {
     id: 2,
     image: '/carousel/carosel2.jpeg',
     title: 'Learn & Serve',
-    description: 'Our motto guides every student toward academic excellence and social responsibility',
+    description: 'Our motto guides every student toward academic excellence and social responsibility.',
   },
   {
     id: 3,
     image: '/carousel/carosel3.jpg',
     title: 'State-of-the-Art Facilities',
-    description: 'Modern laboratories, advanced library, and technology tools for holistic learning',
+    description: 'Modern laboratories, advanced library, and technology tools for holistic learning.',
   },
   {
     id: 4,
     image: '/carousel/carosel4.jpeg',
     title: 'Disciplined Leaders',
-    description: 'Our vision: To be the most disciplined secondary school in Tanzania',
+    description: 'Our vision: to be the most disciplined secondary school in Tanzania.',
   },
   {
     id: 5,
     image: '/carousel/carosel5.jpg',
     title: 'Critical Thinking & Innovation',
-    description: 'WTS Program develops creativity, resilience, and problem-solving skills',
+    description: 'WTS Program develops creativity, resilience, and problem-solving skills.',
   },
   {
     id: 6,
     image: '/carousel/carosel6.jpeg',
     title: 'Building Great Thinkers',
-    description: 'Developing talent and potential through professional facilitation and mentorship',
+    description: 'Developing talent and potential through professional facilitation and mentorship.',
   },
 ];
 
@@ -59,7 +60,7 @@ export default function Carousel() {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 5000); // Change slide every 5 seconds
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [isAutoPlay]);
@@ -82,101 +83,71 @@ export default function Carousel() {
   const currentSlideData = slides[currentSlide];
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
-      {/* Carousel Images */}
+    <div className="group relative h-[84vh] min-h-[560px] w-full overflow-hidden bg-slate-950">
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-            index === currentSlide ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
         >
-          <Image
-            src={slide.image}
-            alt={slide.title}
-            fill
-            className="object-cover"
-            priority={index === 0}
-            quality={85}
-          />
-          {/* Dark overlay */}
-          <div className="absolute inset-0 bg-black/40"></div>
+          <Image src={slide.image} alt={slide.title} fill className="object-cover" priority={index === 0} quality={86} />
+          <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(2,6,23,0.9)_8%,rgba(2,6,23,0.72)_45%,rgba(2,6,23,0.46)_100%)]" />
         </div>
       ))}
 
-      {/* Content Overlay */}
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white z-10">
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 leading-tight drop-shadow-lg">
-            {currentSlideData.title}
-          </h2>
-          <p className="text-lg sm:text-xl lg:text-2xl mb-8 drop-shadow-md text-gray-100">
-            {currentSlideData.description}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="/admission"
-              className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-200"
-            >
-              Apply Now
-            </a>
-            <a
-              href="/about"
-              className="inline-block bg-white hover:bg-gray-100 text-blue-900 font-semibold px-8 py-3 rounded-lg transition-colors duration-200"
-            >
-              Learn More
-            </a>
+{/* Carousel card */}
+      <div className="absolute inset-0 z-10 flex items-center">
+        <div className="mx-auto w-full max-w-7xl px-5 sm:px-7 lg:px-10">
+          <div className="flex h-[320px] max-w-3xl flex-col rounded-3xl border border-white/20 bg-white/8 p-7 shadow-2xl backdrop-blur-sm sm:h-[350px] sm:p-10 lg:h-[380px]">
+            <span className="kicker self-start !border-sky-100/35 !bg-sky-200/15 !text-sky-100">Academic Excellence in Action</span>
+            <h2 className="mt-5 text-balance text-4xl font-bold leading-tight !text-white sm:text-5xl lg:text-6xl">{currentSlideData.title}</h2>
+            <p className="mt-4 max-w-2xl text-base text-on-dark sm:text-lg">{currentSlideData.description}</p>
+            <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row">
+              <Link href="/admission" className="cta-primary">Apply Now</Link>
+              <Link href="/about" className="cta-secondary !border-white/35 !bg-white/15 !text-white hover:!bg-white/20">Learn More</Link>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Previous Button */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600"
+        className="pointer-events-none absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/30 bg-white/15 p-2.5 text-white opacity-0 backdrop-blur-sm transition-all duration-200 hover:bg-white/30 group-hover:pointer-events-auto group-hover:opacity-100 sm:left-6"
         aria-label="Previous slide"
       >
-        <ChevronLeft size={32} />
+        <ChevronLeft size={28} />
       </button>
 
-      {/* Next Button */}
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-600"
+        className="pointer-events-none absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full border border-white/30 bg-white/15 p-2.5 text-white opacity-0 backdrop-blur-sm transition-all duration-200 hover:bg-white/30 group-hover:pointer-events-auto group-hover:opacity-100 sm:right-6"
         aria-label="Next slide"
       >
-        <ChevronRight size={32} />
+        <ChevronRight size={28} />
       </button>
 
-      {/* Dots Navigation */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-20">
+      <div className="absolute bottom-7 left-1/2 z-20 flex -translate-x-1/2 gap-2">
         {slides.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`h-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-400 ${
-              index === currentSlide
-                ? 'bg-white w-8'
-                : 'bg-white/50 hover:bg-white/75 w-3'
-            }`}
+            className={`h-2.5 rounded-full transition-all ${index === currentSlide ? 'w-9 bg-white' : 'w-2.5 bg-white/55 hover:bg-white/80'}`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}
       </div>
 
-      {/* Slide Counter */}
-      <div className="absolute top-6 right-6 text-white font-semibold text-sm bg-black/50 px-4 py-2 rounded-lg z-20">
-        {currentSlide + 1} / {slides.length}
-      </div>
+{/* Play badge btn */}
+      {/* <div className="absolute left-5 top-5 z-20 rounded-full border border-white/30 bg-black/35 px-3 py-1 text-xs font-semibold tracking-[0.05em] text-white backdrop-blur sm:left-7">
+        {isAutoPlay ? 'Auto Play' : 'Manual'}
+      </div> 
 
-      {/* Auto-play toggle */}
       <button
-        onClick={() => setIsAutoPlay(!isAutoPlay)}
-        className="absolute top-6 left-6 text-white font-semibold text-sm bg-black/50 px-4 py-2 rounded-lg z-20 hover:bg-black/75 transition-colors"
+        onClick={() => setIsAutoPlay((prev) => !prev)}
+        className="absolute right-5 top-5 z-20 rounded-full border border-white/30 bg-black/35 px-3 py-1 text-xs font-semibold tracking-[0.05em] text-white backdrop-blur hover:bg-black/50 sm:right-7"
         aria-label={isAutoPlay ? 'Pause carousel' : 'Play carousel'}
       >
-        {isAutoPlay ? '⏸ Pause' : '▶ Play'}
-      </button>
+        {isAutoPlay ? 'Pause' : 'Play'}
+      </button>*/}
     </div>
   );
 }

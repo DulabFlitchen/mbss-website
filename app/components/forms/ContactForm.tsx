@@ -21,7 +21,8 @@ interface FormErrors {
 }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phoneRegex = /^[+()\d\s-]{7,20}$/;
+const phoneRegex = /^\d{9}$/;
+const COUNTRY_CODE = '+255';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -53,7 +54,7 @@ export default function ContactForm() {
     }
 
     if (formData.phone.trim() && !phoneRegex.test(formData.phone.trim())) {
-      newErrors.phone = 'Please enter a valid phone number';
+      newErrors.phone = 'Please enter exactly 9 digits';
     }
 
     if (!formData.subject.trim()) {
@@ -74,6 +75,21 @@ export default function ContactForm() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+    if (name === 'phone') {
+      const phoneValue = value.replace(/\D/g, '').slice(0, 9);
+      setFormData((prev) => ({ ...prev, phone: phoneValue }));
+
+      if (!phoneValue) {
+        setErrors((prev) => ({ ...prev, phone: undefined }));
+        return;
+      }
+
+      if (errors.phone) {
+        setErrors((prev) => ({ ...prev, phone: undefined }));
+      }
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (name === 'phone' && !value.trim()) {
@@ -103,7 +119,10 @@ export default function ContactForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          phone: formData.phone ? `${COUNTRY_CODE}${formData.phone}` : '',
+        }),
       });
 
       const result = (await response.json().catch(() => null)) as
@@ -226,20 +245,29 @@ export default function ContactForm() {
         <label htmlFor="phone" className="block text-gray-800 font-medium mb-2">
           Phone Number
         </label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          maxLength={20}
-          aria-invalid={Boolean(errors.phone)}
-          aria-describedby={errors.phone ? 'phone-error' : undefined}
-          className={`w-full px-4 py-3 rounded-lg border text-gray-900 placeholder:text-gray-400 ${
+        <div
+          className={`flex w-full rounded-lg border ${
             errors.phone ? 'border-red-500' : 'border-gray-300'
-          } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-          placeholder="+255..."
-        />
+          } focus-within:ring-2 focus-within:ring-blue-500`}
+        >
+          <span className="inline-flex items-center border-r border-gray-300 px-4 py-3 font-medium text-gray-700">
+            {COUNTRY_CODE}
+          </span>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            inputMode="numeric"
+            pattern="[0-9]{9}"
+            maxLength={9}
+            aria-invalid={Boolean(errors.phone)}
+            aria-describedby={errors.phone ? 'phone-error' : undefined}
+            className="w-full rounded-r-lg px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none"
+            placeholder="712345678"
+          />
+        </div>
         {errors.phone && <p id="phone-error" className="text-red-500 text-sm mt-1">{errors.phone}</p>}
       </div>
 

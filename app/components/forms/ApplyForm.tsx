@@ -33,7 +33,8 @@ interface FormErrors {
 }
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const phoneRegex = /^[+()\d\s-]{7,20}$/;
+const phoneRegex = /^\d{9}$/;
+const COUNTRY_CODE = '+255';
 
 export default function ApplyForm() {
   const [formData, setFormData] = useState<FormData>({
@@ -81,7 +82,7 @@ export default function ApplyForm() {
     if (!formData.phone.trim()) {
       newErrors.phone = 'Phone number is required';
     } else if (!phoneRegex.test(formData.phone.trim())) {
-      newErrors.phone = 'Please enter a valid phone number';
+      newErrors.phone = 'Please enter exactly 9 digits';
     }
 
     if (!formData.guardianName.trim()) {
@@ -91,7 +92,7 @@ export default function ApplyForm() {
     if (!formData.guardianPhone.trim()) {
       newErrors.guardianPhone = 'Guardian phone is required';
     } else if (!phoneRegex.test(formData.guardianPhone.trim())) {
-      newErrors.guardianPhone = 'Please enter a valid guardian phone number';
+      newErrors.guardianPhone = 'Please enter exactly 9 digits';
     }
 
     if (formData.guardianEmail.trim() && !emailRegex.test(formData.guardianEmail.trim())) {
@@ -118,6 +119,17 @@ export default function ApplyForm() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+
+    if (name === 'phone' || name === 'guardianPhone') {
+      const phoneValue = value.replace(/\D/g, '').slice(0, 9);
+      setFormData((prev) => ({ ...prev, [name]: phoneValue }));
+
+      if (errors[name as keyof FormErrors]) {
+        setErrors((prev) => ({ ...prev, [name]: undefined }));
+      }
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     if (name === 'guardianEmail' && !value.trim()) {
@@ -147,7 +159,11 @@ export default function ApplyForm() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          phone: `${COUNTRY_CODE}${formData.phone}`,
+          guardianPhone: `${COUNTRY_CODE}${formData.guardianPhone}`,
+        }),
       });
 
       const result = (await response.json().catch(() => null)) as
@@ -359,21 +375,30 @@ export default function ApplyForm() {
           <label htmlFor="phone" className="block text-gray-800 font-medium mb-2">
             Student Phone <span className="text-red-500">*</span>
           </label>
-          <input
-            type="tel"
-            id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            required
-            maxLength={20}
-            aria-invalid={Boolean(errors.phone)}
-            aria-describedby={errors.phone ? 'phone-error' : undefined}
-            className={`w-full px-4 py-3 rounded-lg border text-gray-900 placeholder:text-gray-400 ${
+          <div
+            className={`flex w-full rounded-lg border ${
               errors.phone ? 'border-red-500' : 'border-gray-300'
-            } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            placeholder="+255..."
-          />
+            } focus-within:ring-2 focus-within:ring-blue-500`}
+          >
+            <span className="inline-flex items-center border-r border-gray-300 px-4 py-3 font-medium text-gray-700">
+              {COUNTRY_CODE}
+            </span>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              required
+              inputMode="numeric"
+              pattern="[0-9]{9}"
+              maxLength={9}
+              aria-invalid={Boolean(errors.phone)}
+              aria-describedby={errors.phone ? 'phone-error' : undefined}
+              className="w-full rounded-r-lg px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none"
+              placeholder="712345678"
+            />
+          </div>
           {errors.phone && <p id="phone-error" className="text-red-500 text-sm mt-1">{errors.phone}</p>}
         </div>
       </div>
@@ -409,21 +434,30 @@ export default function ApplyForm() {
           <label htmlFor="guardianPhone" className="block text-gray-800 font-medium mb-2">
             Guardian Phone <span className="text-red-500">*</span>
           </label>
-          <input
-            type="tel"
-            id="guardianPhone"
-            name="guardianPhone"
-            value={formData.guardianPhone}
-            onChange={handleChange}
-            required
-            maxLength={20}
-            aria-invalid={Boolean(errors.guardianPhone)}
-            aria-describedby={errors.guardianPhone ? 'guardianPhone-error' : undefined}
-            className={`w-full px-4 py-3 rounded-lg border text-gray-900 placeholder:text-gray-400 ${
+          <div
+            className={`flex w-full rounded-lg border ${
               errors.guardianPhone ? 'border-red-500' : 'border-gray-300'
-            } focus:outline-none focus:ring-2 focus:ring-blue-500`}
-            placeholder="+255..."
-          />
+            } focus-within:ring-2 focus-within:ring-blue-500`}
+          >
+            <span className="inline-flex items-center border-r border-gray-300 px-4 py-3 font-medium text-gray-700">
+              {COUNTRY_CODE}
+            </span>
+            <input
+              type="tel"
+              id="guardianPhone"
+              name="guardianPhone"
+              value={formData.guardianPhone}
+              onChange={handleChange}
+              required
+              inputMode="numeric"
+              pattern="[0-9]{9}"
+              maxLength={9}
+              aria-invalid={Boolean(errors.guardianPhone)}
+              aria-describedby={errors.guardianPhone ? 'guardianPhone-error' : undefined}
+              className="w-full rounded-r-lg px-4 py-3 text-gray-900 placeholder:text-gray-400 focus:outline-none"
+              placeholder="712345678"
+            />
+          </div>
           {errors.guardianPhone && (
             <p id="guardianPhone-error" className="text-red-500 text-sm mt-1">{errors.guardianPhone}</p>
           )}

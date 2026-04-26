@@ -5,20 +5,21 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
+import Container from './Container';
+
+const navigationLinks = [
+  { label: 'Home', href: '/' },
+  { label: 'About Us', href: '/about' },
+  { label: 'Admission', href: '/admission' },
+  { label: 'Academic', href: '/academic' },
+  { label: 'Achievements', href: '/achievements' },
+  { label: 'Gallery', href: '/gallery' },
+  { label: 'Contact', href: '/contact' },
+];
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-
-  const navigationLinks = [
-    { label: 'HOME', href: '/' },
-    { label: 'ABOUT US', href: '/about' },
-    { label: 'ADMISSION', href: '/admission' },
-    { label: 'ACADEMIC', href: '/academic' },
-    { label: 'ACHIEVEMENTS', href: '/achievements' },
-    { label: 'GALLERY', href: '/gallery' },
-    { label: 'CONTACTS', href: '/contact' },
-  ];
 
   const isActive = (href: string) => {
     if (href === '/') return pathname === '/';
@@ -26,35 +27,33 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16 sm:h-20">
-          {/* Logo */}
-          <Link href="/" className="flex-shrink-0 flex items-center gap-2">
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/85 backdrop-blur-lg" style={{ boxShadow: 'var(--shadow-nav)' }}>
+      <Container>
+        <div className="flex h-18 items-center justify-between gap-4 sm:h-20">
+          <Link href="/" className="flex items-center gap-3 rounded-xl pr-2">
             <Image
               src="/schoolLogo.png"
               alt="Mwandege Boys Secondary School Logo"
-              width={45}
-              height={45}
-              className="w-10 sm:w-12 h-auto"
+              width={52}
+              height={52}
+              className="h-11 w-11 rounded-xl border border-slate-200 bg-white p-1.5 shadow-sm sm:h-12 sm:w-12"
               priority
             />
-            <div className="hidden sm:block">
-              <p className="text-xs sm:text-sm font-bold text-blue-900">MWANDEGE</p>
-              <p className="text-xs text-blue-700">BOYS SECONDARY</p>
+            <div className="hidden sm:block leading-tight">
+              <p className="text-xs font-bold uppercase tracking-[0.14em] text-slate-900">Mwandege</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-600">Boys Secondary</p>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
+          <nav className="hidden items-center gap-1.5 lg:flex">
             {navigationLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
+                className={`rounded-xl px-3.5 py-2 text-sm font-semibold transition-all duration-200 ${
                   isActive(link.href)
-                    ? 'text-blue-900 bg-blue-50'
-                    : 'text-gray-700 hover:text-blue-900 hover:bg-blue-50'
+                    ? 'bg-sky-50 text-sky-900 shadow-sm'
+                    : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
                 }`}
               >
                 {link.label}
@@ -62,50 +61,38 @@ export default function Header() {
             ))}
           </nav>
 
-          {/* Desktop Apply Button */}
           <div className="hidden lg:block">
-            <Link
-              href="/admission"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors duration-200"
-            >
+            <Link href="/admission" className="cta-primary">
               Apply Now
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="flex lg:hidden items-center gap-4">
-            <Link
-              href="/admission"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors duration-200"
-            >
+          <div className="flex items-center gap-2 lg:hidden">
+            <Link href="/admission" className="cta-primary text-sm">
               Apply
             </Link>
             <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-blue-900 focus:outline-none"
+              onClick={() => setIsMenuOpen((prev) => !prev)}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
               aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
             >
-              {isMenuOpen ? (
-                <X size={24} />
-              ) : (
-                <Menu size={24} />
-              )}
+              {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="lg:hidden pb-4">
-            <div className="flex flex-col gap-2">
+          <nav className="pb-5 lg:hidden">
+            <div className="pro-card flex flex-col gap-1 p-2.5">
               {navigationLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-4 py-2 text-sm font-medium rounded-md transition-colors duration-200 ${
+                  className={`rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${
                     isActive(link.href)
-                      ? 'text-blue-900 bg-blue-50'
-                      : 'text-gray-700 hover:text-blue-900 hover:bg-blue-50'
+                      ? 'bg-sky-50 text-sky-900'
+                      : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -115,7 +102,7 @@ export default function Header() {
             </div>
           </nav>
         )}
-      </div>
+      </Container>
     </header>
   );
 }
