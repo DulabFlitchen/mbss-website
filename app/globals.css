@@ -1,8 +1,20 @@
 @import "tailwindcss";
 
 :root {
+  /* Light theme - Primary */
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a1a1a;
+  
+  /* School branding colors */
+  --primary-blue: #003f7f;      /* Deep school blue */
+  --primary-blue-light: #1565c0; /* Medium blue */
+  --secondary-blue: #42a5f5;    /* Light blue for accents */
+  --accent-white: #f5f7fa;      /* Off-white for backgrounds */
+  
+  /* Text colors */
+  --text-dark: #1a1a1a;         /* Dark gray for text */
+  --text-light: #666666;        /* Light gray for secondary text */
+  --text-muted: #999999;        /* Muted gray */
 }
 
 @theme inline {
@@ -10,17 +22,78 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  /* Custom color palette for school branding */
+  --color-school-blue: #003f7f;
+  --color-school-blue-light: #1565c0;
+  --color-school-accent: #42a5f5;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f1419;
+    --foreground: #f0f0f0;
   }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--accent-white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--primary-blue);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-blue-light);
+}
+
+/* Selection styling */
+::selection {
+  background: var(--primary-blue);
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--primary-blue);
+  color: white;
+}
+
+/* Utility classes for school branding */
+.school-blue {
+  color: var(--primary-blue);
+}
+
+.school-blue-bg {
+  background-color: var(--primary-blue);
+}
+
+.school-blue-light {
+  color: var(--primary-blue-light);
+}
+
+.school-blue-light-bg {
+  background-color: var(--primary-blue-light);
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--primary-blue);
+  outline-offset: 2px;
 }
