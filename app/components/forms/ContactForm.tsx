@@ -121,7 +121,7 @@ export default function ContactForm() {
         body.append(key, value);
       }
 
-      const res = await fetch('/api/contact', {
+      const res = await fetch('/__forms.html', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

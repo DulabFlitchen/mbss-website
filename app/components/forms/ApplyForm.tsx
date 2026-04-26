@@ -162,7 +162,7 @@ export default function ApplyForm() {
         body.append(key, value);
       }
 
-      const res = await fetch('/api/application', {
+      const res = await fetch('/__forms.html', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
